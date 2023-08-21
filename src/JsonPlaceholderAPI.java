@@ -159,7 +159,9 @@ public class JsonPlaceholderAPI {
             System.out.println("Created User: " + createdUser);
 
             createdUser.addProperty("website", "https://newmaster.com");
+            createdUser.addProperty("id", 6);
             JsonObject updatedUser = apiClient.updateUser(createdUser);
+
             System.out.println("Updated User: " + updatedUser);
 
             int deleteStatusCode = apiClient.deleteUser(updatedUser.get("id").getAsInt());
