@@ -157,8 +157,8 @@ public class JsonPlaceholderAPI {
 
             JsonObject createdUser = apiClient.createNewUser(newUser);
             System.out.println("Created User: " + createdUser);
-
             createdUser.addProperty("website", "https://newmaster.com");
+
             createdUser.addProperty("id", 6);
             JsonObject updatedUser = apiClient.updateUser(createdUser);
 
