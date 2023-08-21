@@ -12,18 +12,20 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
-public class JSONPlaceholderApiClient {
+public class JsonPlaceholderAPI {
 
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
 
     private final CloseableHttpClient httpClient;
 
-    public JSONPlaceholderApiClient() {
+    public JsonPlaceholderAPI() {
         this.httpClient = HttpClients.createDefault();
     }
 
@@ -46,8 +48,9 @@ public class JSONPlaceholderApiClient {
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
             HttpEntity entity = response.getEntity();
-            InputStream inputStream = entity.getContent();
-            return JsonParser.parseReader(new InputStreamReader(inputStream)).getAsJsonObject();
+            try (InputStream inputStream = entity.getContent()) {
+                return JsonParser.parseReader(new InputStreamReader(inputStream)).getAsJsonObject();
+            }
         }
     }
 
@@ -142,7 +145,7 @@ public class JSONPlaceholderApiClient {
     }
 
     public static void main(String[] args) {
-        JSONPlaceholderApiClient apiClient = new JSONPlaceholderApiClient();
+        JsonPlaceholderAPI apiClient = new JsonPlaceholderAPI();
 
         try {
             JsonObject newUser = new JsonObject();
